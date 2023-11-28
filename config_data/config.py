@@ -26,19 +26,20 @@ class Config:
     db: DatabaseConfig
 
 
-env: Env = Env()
-env.read_env()
+def load_config(path: str | None = None) -> Config:
+    
+    env: Env = Env()
+    env.read_env(path=path)
 
-
-config: Config = Config(
-    tg_bot=TgBot(
-        bot_token=env('BOT_TOKEN')
-    ),
-    db=DatabaseConfig(
-        host=env('DB_HOST'),
-        port=env.int('DB_PORT'),
-        name=env('DATABASE'),
-        user=env('DB_USER'),
-        password=env('DB_PASSWORD')
+    return Config(
+        tg_bot=TgBot(
+            bot_token=env('BOT_TOKEN')
+        ),
+        db=DatabaseConfig(
+            host=env('DB_HOST'),
+            port=env.int('DB_PORT'),
+            name=env('DATABASE'),
+            user=env('DB_USER'),
+            password=env('DB_PASSWORD')
+        )
     )
-)

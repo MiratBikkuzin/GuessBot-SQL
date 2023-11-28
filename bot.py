@@ -5,6 +5,7 @@ from aiogram.types import Message, ChatMemberUpdated
 import re, asyncio, aiomysql
 
 
+config: Config = load_config()
 bot: Bot = Bot(config.tg_bot.bot_token)
 dp: Dispatcher = Dispatcher()
 
