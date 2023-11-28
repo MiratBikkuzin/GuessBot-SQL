@@ -1,11 +1,11 @@
-from details import *
+from config_data import *
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandStart, ChatMemberUpdatedFilter, KICKED, MEMBER
 from aiogram.types import Message, ChatMemberUpdated
 import re, asyncio, aiomysql
 
 
-bot: Bot = Bot(bot_token)
+bot: Bot = Bot(config.tg_bot.bot_token)
 dp: Dispatcher = Dispatcher()
 
 
@@ -147,7 +147,7 @@ async def process_positive_answer(message: Message):
     else:
 
         users[user_id]['in_game']: bool = True
-        users[user_id]['secret_number']: int = get_random_number()
+        users[user_id]['secret_number']: int = randint(1, 100)
         users[user_id]['attempts']: int = ATTEMPTS
 
         await message.answer(F'Ура! Я загадал число от 1 до 100, попробуй отгадать! У тебя всего {ATTEMPTS} попыток')
@@ -179,11 +179,11 @@ async def main() -> None:
 
     pool: aiomysql.Pool = await aiomysql.create_pool(
         loop=asyncio.get_running_loop(),
-        user=db_user,
-        password=db_password,
-        db=database,
-        host=db_host,
-        port=db_port,
+        user=config.db.user,
+        password=config.db.password,
+        db=config.db.name,
+        host=config.db.host,
+        port=config.db.port,
         autocommit=True
         )
 
