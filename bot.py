@@ -185,10 +185,9 @@ async def process_user_unblocked_bot(event: ChatMemberUpdated):
 
 async def main() -> None:
     global connection
-    loop: asyncio.windows_events.ProactorEventLoop = asyncio.get_event_loop()
 
     pool: aiomysql.Pool = await aiomysql.create_pool(
-        loop=loop,
+        loop=asyncio.get_running_loop(),
         user=db_user,
         password=db_password,
         db=database,
