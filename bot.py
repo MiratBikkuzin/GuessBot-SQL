@@ -2,20 +2,11 @@ from details import *
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandStart, ChatMemberUpdatedFilter, KICKED, MEMBER
 from aiogram.types import Message, ChatMemberUpdated
-from random import randint
 import re, asyncio, aiomysql
-
-
-ATTEMPTS: int = 8  # Попытки доступные пользователю в одной игре
 
 
 bot: Bot = Bot(bot_token)
 dp: Dispatcher = Dispatcher()
-users: dict = {}
-
-
-def get_random_number() -> int:
-    return randint(1, 100)
 
 
 async def execute_query(query: str, main_command: str) -> tuple | None:
