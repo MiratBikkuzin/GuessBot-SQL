@@ -1,9 +1,12 @@
 from config_data import *
-from lexicon.lexicon_ru import *
+from lexicon import *
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandStart, ChatMemberUpdatedFilter, KICKED, MEMBER
 from aiogram.types import Message, ChatMemberUpdated
 import re, asyncio, aiomysql
+
+
+dp: Dispatcher = Dispatcher()
 
 
 async def execute_query(query: str, main_command: str) -> tuple | None:
@@ -170,11 +173,9 @@ async def process_user_unblocked_bot(event: ChatMemberUpdated):
 
 async def main() -> None:
     global connection
-    global dp
 
     config: Config = load_config()
     bot: Bot = Bot(config.tg_bot.bot_token)
-    dp: Dispatcher = Dispatcher()
 
     pool: aiomysql.Pool = await aiomysql.create_pool(
         loop=asyncio.get_running_loop(),
