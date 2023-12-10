@@ -6,11 +6,6 @@ from aiogram.types import Message, ChatMemberUpdated
 import re, asyncio, aiomysql
 
 
-config: Config = load_config()
-bot: Bot = Bot(config.tg_bot.bot_token)
-dp: Dispatcher = Dispatcher()
-
-
 async def execute_query(query: str, main_command: str) -> tuple | None:
     async with connection.cursor() as cursor:
         await cursor.execute(query)
@@ -175,6 +170,11 @@ async def process_user_unblocked_bot(event: ChatMemberUpdated):
 
 async def main() -> None:
     global connection
+    global dp
+
+    config: Config = load_config()
+    bot: Bot = Bot(config.tg_bot.bot_token)
+    dp: Dispatcher = Dispatcher()
 
     pool: aiomysql.Pool = await aiomysql.create_pool(
         loop=asyncio.get_running_loop(),
