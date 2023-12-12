@@ -1,2 +1,2 @@
 from lexicon.ru_lexicon_functions import *
-from lexicon.lexicon_ru import lexicon_RU
+from lexicon.lexicon import lexicon_RU

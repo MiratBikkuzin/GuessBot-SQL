@@ -2,10 +2,6 @@ from environs import Env
 from dataclasses import dataclass
 
 
-ATTEMPTS: int = 8  # Попытки доступные пользователю в одной игре
-users: dict = {}
-
-
 @dataclass
 class DatabaseConfig:
     host: str
