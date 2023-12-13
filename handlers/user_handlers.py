@@ -1,8 +1,9 @@
-from lexicon import *
+from lexicon.ru_lexicon_functions import *
 from vars_and_queries.game_vars import ATTEMPTS, users
 from vars_and_queries.emojize import *
 from models.db_queries import *
 from models.methods import execute_query
+from keyboards import keyboard
 
 from aiogram import Router, F
 from aiogram.filters import Command, CommandStart, ChatMemberUpdatedFilter, KICKED, MEMBER
@@ -29,10 +30,12 @@ async def process_start_command(message: Message):
         
     if not await execute_query(select_user_info_query % user_id, 'select'):
         await execute_query(add_user_query % (user_id, username, first_name, 0, 0, 0, 0, 'Active'), 'insert')
-        await message.answer(reply_start_command(first_name, False))
+        await message.answer(text=reply_start_command(first_name, False),
+                             reply_markup=keyboard)
 
     else:
-        await message.answer(reply_start_command(first_name, True))
+        await message.answer(text=reply_start_command(first_name, True),
+                             reply_markup=keyboard)
 
 
 @router.message(Command(commands=('help')))
